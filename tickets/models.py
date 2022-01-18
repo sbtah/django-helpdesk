@@ -8,17 +8,16 @@ class Ticket(models.Model):
 
     
     class Importance(models.TextChoices):
-        low = "It's anoying."
-        mid = "It slows me down."
-        high = "I can't work."
-        very_high = "Critial."
+        low = "LOW"
+        mid = "MID"
+        high = "HIGH"
+        very_high = "VERY HIGH"
     
     class Status(models.TextChoices):
         created = 'CREATED'
         picked_up = 'PICKED UP'
         extended = 'EXTENDED'
         finished = 'FINISHED'
-
 
 
     title = models.CharField(help_text=_('Title of problem'), max_length=100)
