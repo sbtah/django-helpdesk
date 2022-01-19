@@ -5,7 +5,6 @@ from django.urls import reverse
 
 class Ticket(models.Model):
     """Model for user's tickets."""
-
     
     class Importance(models.TextChoices):
         low = "LOW"
