@@ -2,7 +2,7 @@
 {% block title %}Create Ticket{% endblock title %}
 {% block content %}
 <div class="container-sm mt-3 text-center mt-5 shadow mt-3 p-4 mb-5 rounded">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="w-100 btn btn-info mt-4" type="submit">Create a Ticket</button>

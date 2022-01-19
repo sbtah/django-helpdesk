@@ -3,12 +3,13 @@ from tickets.models import Ticket
 from tickets.forms import TicketForm
 
 
+
 def create_ticket(request):
     """Create a ticket view."""
 
     form = TicketForm
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')

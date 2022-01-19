@@ -19,9 +19,3 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'screenshot', 'importance', 'created_by',]
-        help_texts = {
-            'title': _('Short useful title.'),
-            'description': _('WHEN, HOW, SOFTWARE, HARDWARE?'),
-            'screenshot': _('Post a screenshot of error.'),
-            'importance': _("LOW:It's anoying, MID:It slows me down, HIGH: I can't work, VERY HIGH: Critical (like server is burning)"),
-        } 
