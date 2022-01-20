@@ -21,7 +21,7 @@ class Ticket(models.Model):
 
     title = models.CharField(help_text=_('Title of problem'), max_length=100)
     description = models.TextField(help_text=_('Description of problem.'))
-    screenshot = models.FileField(upload_to='worksheets', blank=True)
+    screenshot = models.FileField(upload_to='screenshots', blank=True)
     importance = models.CharField(max_length=20, choices=Importance.choices)
     created_by = models.CharField(max_length=20, default='USER')
     status = models.CharField(

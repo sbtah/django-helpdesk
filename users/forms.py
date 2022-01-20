@@ -18,7 +18,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = "__all__"
+        fields = ('email', 'full_name', 'password1', 'password2',)
         field_classes = {'email': UsernameField}
 
 
@@ -38,7 +38,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = get_user_model()
-        fields = "__all__"
+        fields = ('full_name', 'password')
         field_classes = {'email': UsernameField}
 
 
@@ -47,7 +47,7 @@ class CustomUserAuthenticationForm(AuthenticationForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update(
+        self.fields['username'].widget.attrs.update(
             {'class': 'form-control'})
         self.fields['password'].widget.attrs.update(
             {'class': 'form-control'})

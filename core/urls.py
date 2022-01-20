@@ -9,6 +9,7 @@ from core.views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
+    path('users/', include('users.urls', namespace='users')),
     path('tickets/', include('tickets.urls', namespace='tickets')),
 ]
 
