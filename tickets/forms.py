@@ -18,4 +18,4 @@ class TicketForm(forms.ModelForm):
    
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'screenshot', 'importance', 'created_by',]
+        fields = ['title', 'description', 'screenshot', 'importance']

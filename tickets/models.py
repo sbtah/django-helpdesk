@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.conf import settings
 
 
 class Ticket(models.Model):
@@ -23,7 +24,7 @@ class Ticket(models.Model):
     description = models.TextField(help_text=_('Description of problem.'))
     screenshot = models.FileField(upload_to='screenshots', blank=True)
     importance = models.CharField(max_length=20, choices=Importance.choices)
-    created_by = models.CharField(max_length=20, default='USER')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=10,
         choices=Status.choices,
@@ -34,6 +35,6 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('tickets:ticket-details', args=[self.id])
-    
+
     def __str__(self):
         return f"ID:{self.id} Title:{self.title} Created by:{self.created_by} Status:{self.status}"
