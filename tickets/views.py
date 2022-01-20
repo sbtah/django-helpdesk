@@ -18,5 +18,5 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super(TicketCreateView, self).form_valid(form)
-   
+
 
