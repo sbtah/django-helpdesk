@@ -16,6 +16,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         return reverse('home')
 
     def form_valid(self, form):
+        """Custom form valid for adding created_by as a currently logged user."""
         form.instance.created_by = self.request.user
         return super(TicketCreateView, self).form_valid(form)
 
