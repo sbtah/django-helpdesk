@@ -18,23 +18,14 @@ class TestTicketCreateView(TestCase):
 
     def test_create_ticket_view_with_no_user(self):
         """Test TicketCreateView while user is not logged in."""
-        data = {
-            'title': 'test title',
-            'description': 'test',
-            'importance': 'low',
-        }
-        response = self.client.post(CREATE_TICKET_URL, data=data)
+
+        response = self.client.post(CREATE_TICKET_URL)
         self.assertEquals(response.status_code, 302)
 
 
     def test_create_ticket_view_user_loggedin(self):
         """Test TicketCreateView with authenticated user."""
-        data = {
-            'title': 'test title',
-            'description': 'test',
-            'importance': 'low',
-            'created_by': self.user,
-        }
+
         self.client.force_login(self.user)
-        response = self.client.post(CREATE_TICKET_URL, data=data)
+        response = self.client.post(CREATE_TICKET_URL)
         self.assertEquals(response.status_code, 200)

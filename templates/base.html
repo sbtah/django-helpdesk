@@ -17,12 +17,13 @@
     <title>ZorinDESK | {% block title %}{% endblock title %}</title>
     <style>
         body {
+            background-color: rgb(58, 57, 57);
             font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
 
-<body class="">
+<body>
     {% include 'navbar.html' %}
     {% if messages %}
     {% for message in messages %}
