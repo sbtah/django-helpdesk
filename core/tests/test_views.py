@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from tickets.models import Ticket
 
 
 CREATE_TICKET_URL = reverse('tickets:create-ticket')
@@ -29,3 +30,17 @@ class TestTicketCreateView(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(CREATE_TICKET_URL)
         self.assertEquals(response.status_code, 200)
+
+    def test_create_ticket_view_saves_data(self):
+        """Test that TicketCreateView saves valid object."""
+
+        data = {
+            'title': 'test ticket',
+            'description': 'Error!',
+            'importance': "LOW",
+            'created_by': self.user.id, # Here I had to provide user's ID!
+        }
+        self.client.force_login(self.user)
+        response = self.client.post(CREATE_TICKET_URL, data=data)
+        self.assertTrue(Ticket.objects.filter(
+            title='test ticket').exists())

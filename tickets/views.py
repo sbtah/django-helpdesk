@@ -12,7 +12,7 @@ class TicketCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     form_class = TicketForm
     template_name = 'tickets/create_ticket.html'
-    success_message = f'Ticket created, thank you'
+    success_message = 'Ticket created, thank you'
     model = Ticket
 
     def get_success_url(self):
@@ -21,4 +21,4 @@ class TicketCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         """Custom form valid for adding created_by as a currently logged user."""
         form.instance.created_by = self.request.user
-        return super(TicketCreateView, self).form_valid(form)   
+        return super(TicketCreateView, self).form_valid(form)
