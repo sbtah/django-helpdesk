@@ -26,7 +26,7 @@ class TicketFormTest(TestCase):
             password='test123!',
         )
     
-    def test_form_is_valid(self):
+    def test_form_is_valid_object_created(self):
         """Test that data is passed into form and object is created."""
         
         data = {
