@@ -37,4 +37,4 @@ class Ticket(models.Model):
         return reverse('tickets:ticket-details', args=[self.id])
 
     def __str__(self):
-        return f"ID:{self.id} Title:{self.title} Created by:{self.created_by} Status:{self.status}"
+        return f"ID:{self.id} Title:{self.title}"

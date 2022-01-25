@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ ticket.id }}{% endblock title %}
+{% block content %}
+<div class="container-sm mt-3 text-center mt-5 shadow mt-3 p-4 mb-5 rounded text-white border border-info">
+    <div class="card">
+        <div class="card-header text-dark">
+            {{ ticket.title }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title text-dark">{{ ticket.status }}</h5>
+            <p class="card-text text-dark">{{ ticket.description }}</p>
+            <a href="#" class="btn btn-primary">Update</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

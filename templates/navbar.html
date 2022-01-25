@@ -39,15 +39,15 @@
                         IT Tickets
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'tickets:create-ticket' %}">Create Ticket</a></li>
-                        <li><a class="dropdown-item" href="#">My Tickets</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tickets:ticket-create' %}">Create Ticket</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tickets:my-tickets' %}">My Tickets</a></li>
+                        {% if request.user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'tickets:ticket-list' %}">All Tickets</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 {% else %}
                 {% endif %}
-                <ul>
-                    <li><a class="dropdown-item" href="{% url 'tickets:create-ticket' %}">Create Ticket</a></li>
-                </ul>
             </ul>
         </div>
     </div>

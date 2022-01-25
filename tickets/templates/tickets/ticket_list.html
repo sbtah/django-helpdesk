@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}All Tickets{% endblock title %}
+{% block content %}
+<div class="container-sm mt-3 text-center mt-5 shadow mt-3 p-4 mb-5 rounded text-white border border-info">
+    <ul class="list-group">
+        {% if tickets.count > 0 %}
+        {% for ticket in tickets %}
+        <li class="list-group-item">
+            {{ ticket.title }} {{ ticket.status }}
+            <a class="btn btn-info" href="{{ ticket.get_absolute_url }}">Details</a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <li class="list-group-item">No Tickets</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock content %}
