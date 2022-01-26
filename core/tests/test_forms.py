@@ -6,7 +6,7 @@ from tickets.forms import TicketForm
 from tickets.models import Ticket
 
 
-TICKET_FORM_URL = reverse('tickets:create-ticket')
+TICKET_FORM_URL = reverse('tickets:ticket-create')
 
 
 class CustomUserCreationFormTest(TestCase):

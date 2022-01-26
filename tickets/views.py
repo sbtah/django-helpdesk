@@ -5,21 +5,24 @@ from django.urls import reverse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
-class TicketListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class TicketListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """List all tickets view."""
 
     model = Ticket
     template_name = 'tickets/ticket_list.html'
     context_object_name = 'tickets'
-    permission_required = 'is_staff'
+    
 
     def get_queryset(self, *args, **kwargs):
         queryset = super(TicketListView, self).get_queryset(*args, **kwargs)
         queryset = queryset.order_by("-created")
         return queryset
+
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class PersonalTicketListView(LoginRequiredMixin, ListView):
@@ -32,11 +35,13 @@ class PersonalTicketListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         """Get queryset for of tickets for current logged user."""
         queryset = super(PersonalTicketListView, self).get_queryset()
-        queryset = queryset.filter(created_by=self.request.user).order_by("-created")
+        queryset = queryset.filter(
+            created_by=self.request.user
+        ).order_by("-created")
         return queryset
 
 
-class TicketDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class TicketDetailView(LoginRequiredMixin, DetailView):
     """Detail view for ticket."""
 
     model = Ticket
