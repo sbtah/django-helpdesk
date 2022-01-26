@@ -41,14 +41,15 @@ class PersonalTicketListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class TicketDetailView(LoginRequiredMixin, DetailView):
+class TicketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """Detail view for ticket."""
 
     model = Ticket
     template_name = 'tickets/ticket_details.html'
     context_object_name = 'ticket'
-    permission_required = 'is_staff'
-
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
 class TicketCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """Class based view for creating a Ticket."""
