@@ -1,7 +1,7 @@
 from tickets.forms import TicketForm
 from tickets.models import Ticket
 # For CBV
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -25,6 +25,29 @@ class TicketListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return self.request.user.is_staff
 
 
+class TicketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """Detail view for ticket."""
+
+    model = Ticket
+    template_name = 'tickets/ticket_details.html'
+    context_object_name = 'ticket'
+    
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class TicketDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """Delete view for ticket model, available for staff users."""
+
+    model = Ticket
+    template_name = 'tickets/ticket_delete.html'
+    success_url = reverse_lazy('tickets:ticket-list')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+
 class PersonalTicketListView(LoginRequiredMixin, ListView):
     """List all tickets created by logged user."""
 
@@ -40,16 +63,6 @@ class PersonalTicketListView(LoginRequiredMixin, ListView):
         ).order_by("-created")
         return queryset
 
-
-class TicketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    """Detail view for ticket."""
-
-    model = Ticket
-    template_name = 'tickets/ticket_details.html'
-    context_object_name = 'ticket'
-    
-    def test_func(self):
-        return self.request.user.is_staff
 
 class TicketCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """Class based view for creating a Ticket."""
