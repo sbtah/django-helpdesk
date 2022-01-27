@@ -149,3 +149,66 @@ class TestTicketDetailView(TestCase):
         response = self.client.get(reverse('tickets:ticket-details', kwargs={'pk': self.data.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['object'].title, 'Error')
+
+
+class TestTicketDeleteView(TestCase):
+    """Test case for TicketDeleteView."""
+    
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            email='test@test.com',
+            password='test1231',
+        )
+
+        self.staff_user = get_user_model().objects.create_user(
+            email='admin@admin.com',
+            password='test123!',
+            is_staff=True,
+        )
+
+        self.data = Ticket.objects.create(
+            title='Error',
+            description='Something is not working',
+            importance='LOW',
+            created_by=self.user,
+            status='CREATED',
+            created='2022-01-22',
+            updated='2022-01-22',
+        )
+
+        self.client = Client()
+
+    def test_delete_ticket_view_without_user(self):
+        """Test the url of ticket delete view without logged user."""
+        response = self.client.get(reverse('tickets:ticket-delete',
+                                            kwargs={'pk': self.data.id}))
+        self.assertEquals(response.status_code, 302)
+    
+    def test_delete_ticket_view_for_user_without_permission(self):
+        """Test the url of view with user that doesn't have the proper permissions."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('tickets:ticket-delete',
+                                            kwargs={'pk': self.data.id}))
+        self.assertEquals(response.status_code, 403)
+
+    def test_delete_ticket_view_for_user_with_permission(self):
+        """Test the url of view with user that have the proper permission."""
+        self.client.force_login(self.staff_user)
+        response = self.client.get(reverse('tickets:ticket-delete', kwargs={'pk': self.data.id}))
+        self.assertEquals(response.status_code, 200)
+
+    def test_delete_ticket_view_gets_proper_template(self):
+        """Test that view responds with proper template."""
+        self.client.force_login(self.staff_user)
+        response = self.client.get(reverse('tickets:ticket-delete', kwargs={'pk': self.data.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Do you really want to delete this ticket?')
+
+    def test_delete_ticket_view_delete_data(self):
+        """Test that view delete data from db."""
+        self.client.force_login(self.staff_user)
+        response = self.client.post(reverse('tickets:ticket-delete', kwargs={'pk': self.data.id}))
+        item = Ticket.objects.filter(title='Error').exists()
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(item)
+        
