@@ -20,7 +20,7 @@ class TicketCreateForm(forms.ModelForm):
         model = Ticket
         fields = ['title', 'description', 'screenshot', 'importance']
 
-
+# This form is not tested yet!
 class TicketStaffUpdateForm(forms.ModelForm):
     """A model form for updating a ticket with staff users."""
 

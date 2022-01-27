@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-
+# TBI: Staff User should have a method to 'join' ticket as an operator.
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom  User class."""
     email = models.EmailField(unique=True, max_length=100)

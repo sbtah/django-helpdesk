@@ -59,6 +59,21 @@ class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user.is_staff
 
 
+# This view is not tested yet!
+class PersonalTicketUpdateView(LoginRequiredMixin, UpdateView):
+    """Update a ticket created by a logged user."""   
+
+    model = Ticket
+    form_class = TicketCreateForm
+    template_name = 'tickets/ticket_update.html'
+    success_url = reverse_lazy('tickets:my-tickets')
+
+    def get_queryset(self):
+        qs = super(PersonalTicketUpdateView, self).get_queryset()
+        return qs.filter(created_by=self.request.user)
+    
+
+
 class PersonalTicketListView(LoginRequiredMixin, ListView):
     """List all tickets created by logged user."""
 
