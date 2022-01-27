@@ -1,4 +1,4 @@
-from tickets.forms import TicketCreateForm
+from tickets.forms import TicketCreateForm, TicketStaffUpdateForm
 from tickets.models import Ticket
 # For CBV
 from django.urls import reverse, reverse_lazy
@@ -50,10 +50,10 @@ class TicketDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Update view for ticket model, available for staff users."""
     # This view needs to have it's own form_set defined!
-    model = Ticket 
+    model = Ticket
+    form_class = TicketStaffUpdateForm
     template_name = 'tickets/ticket_update.html'
     success_url = reverse_lazy('tickets:ticket-list')
-    fields = '__all__'
 
     def test_func(self):
         return self.request.user.is_staff
