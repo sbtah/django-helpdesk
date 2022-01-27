@@ -14,7 +14,7 @@ class CustomUserCreationFormTest(TestCase):
     pass
 
 
-class TicketFormTest(TestCase):
+class TicketCreateFormTest(TestCase):
     """Test case for Ticket form."""
     
     def setUp(self):
