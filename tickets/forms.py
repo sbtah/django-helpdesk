@@ -2,7 +2,7 @@ from tickets.models import Ticket
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-class TicketForm(forms.ModelForm):
+class TicketCreateForm(forms.ModelForm):
     """A model for creating a ticket."""
 
     def __init__(self, *args, **kwargs):

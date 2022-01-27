@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from tickets.models import Ticket
+
 
 
 class UserManager(BaseUserManager):
@@ -38,5 +40,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
-
     USERNAME_FIELD = 'email'
+
+    @property
+    def get_tickets(self): # This need to be tested !!!
+        """Return all active tickets for a user"""
+
+        tickets = Ticket.objects.filter(created_by=self.request.user)
+        return tickets
+        
+
+
+
+
+    

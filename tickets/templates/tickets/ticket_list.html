@@ -9,6 +9,7 @@
             {{ ticket.title }} {{ ticket.status }}
             <a class="btn btn-info" href="{{ ticket.get_absolute_url }}">Details</a>
             <a class="btn btn-info" href="{% url 'tickets:ticket-delete' pk=ticket.id %}">Delete</a>
+            <a class="btn btn-info" href="{% url 'tickets:ticket-update' pk=ticket.id %}">Update</a>
         </li>
         {% endfor %}
         {% else %}

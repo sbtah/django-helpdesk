@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from users.forms import CustomUserCreationForm, CustomUserAuthenticationForm
-from tickets.forms import TicketForm
+from tickets.forms import TicketCreateForm
 from tickets.models import Ticket
 
 
@@ -35,7 +35,7 @@ class TicketFormTest(TestCase):
             'importance': "LOW",
         }
         self.client.force_login(self.user)
-        form = TicketForm(data=data)
+        form = TicketCreateForm(data=data)
         form.instance.created_by = self.user
         self.assertTrue(form.is_valid())
         form.is_valid()
