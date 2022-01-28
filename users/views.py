@@ -3,6 +3,9 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+# API
+from rest_framework import generics
+from users.serializers import CustomUserSerializer
 
 
 class LoginCustomUserView(SuccessMessageMixin, LoginView):
@@ -29,4 +32,11 @@ class CreateCustomUserView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('users:login-user')
     form_class = CustomUserCreationForm
     success_message = "Your profile was created successfully"
+
+
+# This is not tested yet!
+class CreateCustomUserApiView(generics.CreateAPIView):
+    """Api view for creating new users."""
+
+    serializer_class = CustomUserSerializer
 

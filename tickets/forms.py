@@ -2,6 +2,7 @@ from tickets.models import Ticket
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+
 class TicketCreateForm(forms.ModelForm):
     """A model form for creating a ticket."""
 
@@ -19,6 +20,7 @@ class TicketCreateForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'screenshot', 'importance']
+
 
 # This form is not tested yet!
 class TicketStaffUpdateForm(forms.ModelForm):
