@@ -11,6 +11,7 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('users/', include('users.urls', namespace='users')),
     path('tickets/', include('tickets.urls', namespace='tickets')),
+    path('api/', include('api.urls', namespace='api')),
 ]
 
 
