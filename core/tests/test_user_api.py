@@ -33,7 +33,7 @@ class PublicUserApiTest(TestCase):
         # Checks if user created user have a password.
         self.assertTrue(user.check_password('testpass123'))
         # For security reasons password should not be in response.
-        self.assertNotIn('password', res.data)  
+        self.assertNotIn('password', res.data)
 
     def test_user_exists(self):
         """Test creating a user that already exists in database."""
@@ -64,3 +64,4 @@ class PublicUserApiTest(TestCase):
         self.assertFalse(user_exists)
 
 
+# NEW TESTS!
