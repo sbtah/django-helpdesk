@@ -33,6 +33,34 @@ class PublicUserApiTest(TestCase):
         # Checks if user created user have a password.
         self.assertTrue(user.check_password('testpass123'))
         # For security reasons password should not be in response.
-        self.assertNotIn('password', res.data)
+        self.assertNotIn('password', res.data)  
+
+    def test_user_exists(self):
+        """Test creating a user that already exists in database."""
+        payload = {
+            'email': 'test@test.com',
+            'full_name': 'Stefan',
+            'password': 'testpass123',
+        }
+        # Helper funtion used.
+        create_user(**payload)
+        res = self.client.post(CREATE_USER_URL, payload)
+        # Checks for status code 400 if user already exists.
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_password_too_short(self):
+        """Test that the password must be more than 5 characters."""
+        payload = {
+            'email': 'test@test.com',
+            'full_name': 'Stefan',
+            'password': '123',
+        }
+        res = self.client.post(CREATE_USER_URL, payload)
+        # Checks that response is 400 cause password is too short.
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        # Checks that provided email for user already exists in db.
+        user_exists = get_user_model().objects.filter(
+            email=payload['email']).exists()
+        self.assertFalse(user_exists)
 
 
