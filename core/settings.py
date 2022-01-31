@@ -3,10 +3,11 @@ import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'PyTest')
 DEBUG = os.environ.get('DEBUG', 1)
 
 ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,8 +61,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'HelpDesk',
-        'USER': 'postgres',
+        'NAME': 'helpdesk',
+        'USER': 'test_user',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '',

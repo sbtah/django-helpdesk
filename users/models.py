@@ -5,7 +5,6 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 from tickets.models import Ticket
 
 
-
 class UserManager(BaseUserManager):
     """Custom User Manager Class"""
 
@@ -31,6 +30,8 @@ class UserManager(BaseUserManager):
         return user
 
 # TBI: Staff User should have a method to 'join' ticket as an operator.
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom  User class."""
     email = models.EmailField(unique=True, max_length=100)
@@ -42,15 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
-    @property
-    def get_tickets(self): # This need to be tested !!!
+    def get_tickets(self):  # This need to be tested !!!
         """Return all active tickets for a user"""
 
         tickets = Ticket.objects.filter(created_by=self.request.user)
         return tickets
-        
-
-
-
-
-    
